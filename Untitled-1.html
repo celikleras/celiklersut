@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çiftlik Web Sitesi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        header {
+            display: flex; /* Flexbox kullanarak içerikleri yan yana diz */
+            justify-content: space-between; /* İçerikler arasına boşluk bırak */
+            align-items: center; /* Dikeyde hizala */
+            padding: 10px 20px; /* Başlık içine boşluk - İhtiyaca göre ayarlayın */
+            background-color: #f8f8f8;
+        }
+        header img {
+            max-width: 150px;
+        }
+
+        header .logo { /* Logo için div */
+            flex-shrink: 0; /* Küçülmeyi engelle */
+        }
+        header .logo img {
+            max-width: 150px; /* Logo boyutu - İhtiyaca göre ayarlayın */
+            display: block; /* Ek boşlukları engelle */
+        }
+
+        /* Sağ üst köşe iletişim bilgileri */
+        .top-right-contact {
+            text-align: right; /* Metinleri sağa hizala */
+            font-size: 0.9em; /* Yazı boyutu - İhtiyaca göre ayarlayın */
+            color: #555; /* Metin rengi - İhtiyaca göre ayarlayın */
+        }
+
+        .top-right-contact p {
+            margin: 3px 0; /* Paragraflar arasına boşluk */
+        }
+
+         .top-right-contact a {
+             color: #555; /* Link rengi - İhtiyaca göre ayarlayın */
+             text-decoration: none;
+             transition: color 0.3s ease;
+         }
+
+         .top-right-contact a:hover {
+             color: #007bff; /* Link üzerine gelince renk değişimi - İhtiyaca göre ayarlayın */
+         }
+
+         .top-right-contact i {
+             margin-right: 5px; /* İkon ile metin arasına boşluk */
+             color: #007bff; /* İkon rengi - İhtiyaca göre ayarlayın */
+         }
+
+         .top-right-contact .whatsapp-link i {
+             color: #25D366; /* WhatsApp ikon rengi - İhtiyaca göre ayarlayın */
+         }
+
+        nav {
+            background-color: #333;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            text-align: center; /* Linkleri ortalamak için */
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Linkleri yatayda ortala */
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            text-transform: uppercase; /* Metinleri büyük harf yap */
+            padding: 5px 10px; /* Arka plan boşluğu için padding eklendi */
+            border-radius: 4px; /* Hafif köşeler */
+            transition: color 0.3s ease, background-color 0.3s ease; /* Geçiş efekti güncellendi */
+        }
+
+        nav ul li a.active-link {
+            color: #ffffff; /* Aktif link metin rengi */
+            background-color: rgba(255, 255, 255, 0.1); /* Aktif link arka plan rengi (hafif saydam beyaz) */
+        }
+
+        nav ul li a:hover {
+             background-color: rgba(255, 255, 255, 0.05); /* Mouse üzerine gelince arka plan rengi */
+        }
+
+
+         /* Banner CSS */
+        .banner {
+            overflow: hidden;
+            position: relative;
+            height: 600px; /* Banner yüksekliği sabit - isteğe göre ayarlayın */
+            width: 100%;
+        }
+
+        .banner .slide { /* Her bir slayt için kapsayıcı */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0; /* Başlangıçta görünmez yap */
+            transition: opacity 1s ease-in-out; /* Geçiş efekti */
+            display: flex; /* İçeriği ortalamak için flexbox kullan */
+            flex-direction: column;
+            justify-content: center; /* Dikeyde ortala */
+            align-items: center; /* Yatayda ortala */
+            color: white; /* Yazı rengi (varsayılan, karartılan slaytlarda kullanılacak) */
+            text-align: center;
+        }
+
+        .banner .slide.active {
+            opacity: 1; /* Aktif slaytı görünür yap */
+        }
+
+        /* Görsel karartma katmanı */
+        .banner .slide.darkened-slide::before {
+             content: "";
+             position: absolute;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background-color: rgba(0, 0, 0, 0.5); /* Yarı saydam siyah */
+             z-index: -1; /* Görselin üzerinde ama yazının altında */
+        }
+
+
+        .banner .slide img {
+             display: block;
+             width: 100%;
+             height: 100%;
+             object-fit: cover; /* Oranları bozmadan alanı kapla */
+             position: absolute; /* Slayt divi içinde konumlandır */
+             top: 0;
+             left: 0;
+             z-index: -2; /* Yazı ve karartma katmanının altında */
+        }
+
+        .banner .slide h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 2.5em; /* Başlık boyutu */
+            position: relative; /* z-index için */
+            z-index: 1; /* Karartma katmanının üstünde */
+        }
+
+        .banner .slide p {
+            margin-top: 0;
+            font-size: 1.2em; /* Paragraf boyutu */
+             position: relative; /* z-index için */
+            z-index: 1; /* Karartma katmanının üstünde */
+        }
+
+
+        /* Genel Bölüm ve Sayfa Stilleri */
+        .section, .page {
+            padding: 40px 105px;
+            text-align: center;
+        }
+         .page {
+            display: none; /* Tüm bölümleri gizle */
+            opacity: 0; /* Animasyon için başlangıç opaklığı */
+            transition: opacity 0.5s ease-in-out; /* Geçiş efekti */
+        }
+
+        .page.active {
+            display: block; /* Sadece aktif olan bölümü göster */
+            opacity: 1; /* Aktif olunca tam görünür */
+        }
+
+         /* Animasyon düzeltmesi: display: none'dan block'a geçerken opacity geçişi için */
+         /* Bu kural gerekli olmayabilir, tarayıcıya bağlıdır */
+        /*
+        .page.active.animate-in {
+             opacity: 1;
+        }
+        */
+
+
+        .section h2, .page h2 {
+            margin-bottom: 20px;
+        }
+
+        /* Kartların listelendiği bölümler (Ürünler, Hayvancılık, Tercih Sebepleri) için genel konteyner */
+        .card-container, /* Tercih Sebepleri için vardı */
+        .counter-container, /* Başarılar için vardı */
+        .product-grid { /* Ürünler ve Hayvancılık için yeni */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* Genel kart stili */
+        .card {
+             background-color: #fff;
+             border: 1px solid #ddd;
+             border-radius: 8px;
+             padding: 20px;
+             text-align: center;
+             box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+             flex: 1 1 250px; /* flex-grow, flex-shrink, flex-basis - 250px temel genişlik */
+             max-width: 300px; /* Maksimum kart genişliği */
+             min-width: 200px; /* Minimum kart genişliği */
+             display: flex; /* İçeriği düzenlemek için */
+             flex-direction: column; /* İçeriği alt alta sırala */
+             justify-content: space-between; /* İçeriği dikeyde yay */
+        }
+
+
+        /* Farklı konteynerlerdeki card img stilleri (gerekirse özelleştirilebilir) */
+        .card-container .card img { /* Tercih Sebepleri görselleri */
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+            align-self: center; /* Resmi yatayda ortala */
+        }
+
+        .product-grid .card img { /* Ürünler ve Hayvancılık görselleri */
+            max-width: 100%; /* Kartın genişliğini kapla */
+            height: 150px; /* Sabit görsel yüksekliği - isteğe göre ayarla */
+            object-fit: cover; /* Oranları bozmadan alanı kapla */
+            margin-bottom: 15px;
+            border-radius: 4px; /* Görsel köşelerini yuvarla */
+             align-self: center; /* Resmi yatayda ortala */
+        }
+
+
+        /* Farklı konteynerlerdeki card h3 stilleri */
+        .card-container .card h3 { /* Tercih Sebepleri başlıkları */
+            margin-top: 0;
+            color: #333;
+        }
+         .product-grid .card h3 { /* Ürünler ve Hayvancılık başlıkları */
+             margin-top: 0;
+             color: #0056b3; /* Başlık rengi */
+             font-size: 1.2em;
+             margin-bottom: 10px;
+         }
+
+
+        /* Farklı konteynerlerdeki card p stilleri */
+         .product-grid .card p { /* Ürünler ve Hayvancılık paragrafları */
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.4;
+            flex-grow: 1; /* Paragrafın kalan alanı doldurmasını sağla */
+         }
+
+
+        .counter-container > div {
+             text-align: center;
+             padding: 20px;
+             background-color: #fff;
+             border: 1px solid #ddd;
+             border-radius: 8px;
+             box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+             flex-basis: 150px;
+             flex-grow: 1;
+        }
+
+        .counter-container > div h3 { /* .counter sınıfı kaldırıldı, tüm h3'ler hedefleniyor */
+            font-size: 2em; /* Başlık boyutu */
+            margin: 0 0 5px 0;
+            color: #007bff; /* Başlık rengi */
+        }
+
+        .counter-container p {
+            margin: 0;
+            color: #555;
+        }
+
+        /* Footer CSS */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 20px 20px 20px; /* Üst, Sağ, Alt, Sol boşluklar */
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-around; /* Sütunlar arasına boşluk */
+            flex-wrap: wrap; /* Ekran daralınca alt satıra geç */
+            padding-bottom: 20px;
+            border-bottom: 1px solid #555; /* Üst ve alt kısımlar arasına çizgi */
+            margin-bottom: 20px;
+        }
+
+        .footer-column {
+            flex: 1; /* Esnek büyüme */
+            min-width: 200px; /* Minimum sütun genişliği */
+            margin: 10px; /* Sütunlar arasına boşluk */
+        }
+
+        .footer-column img.footer-logo {
+            max-width: 100px; /* Footer logo boyutu */
+            margin-bottom: 15px;
+        }
+
+        .footer-column p {
+            margin: 5px 0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .footer-column p i {
+            margin-right: 8px;
+            color: #007bff; /* İkon rengi */
+        }
+
+        .footer-column h4 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #007bff; /* Başlık rengi */
+            font-size: 1.1em;
+        }
+
+        .footer-column a {
+            display: block; /* Linkleri alt alta sırala */
+            color: white;
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: #007bff; /* Link üzerine gelince renk değişimi */
+        }
+
+        .social-icons {
+            margin-top: 15px;
+        }
+
+        .social-icons a {
+            display: inline-block; /* İkonları yan yana sırala */
+            color: white;
+            font-size: 1.5em;
+            margin-right: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #007bff; /* İkon üzerine gelince renk değişimi */
+        }
+
+        .footer-bottom {
+            text-align: center;
+            font-size: 0.8em;
+            color: #aaa; /* Alt yazı rengi */
+            
+        }
+
+        .footer-bottom .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-bottom .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom .footer-links a:hover {
+            color: white;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#anasayfa" id="logo-link">
+            <div class="logo">
+                 <img src="logoseffaf.png" alt="Çiftlik Logosu">
+            </div>
+        </a>
+        <div class="top-right-contact">
+            <p>Bizi Arayın</p>
+            <p><i class="fas fa-phone-alt"></i> <a href="tel:+905391191676">0539 119 1676</a></p>
+            <p>WhatsApp sipariş</p>
+            <p><i class="fab fa-whatsapp whatsapp-link"></i> <a href="https://wa.me/905391191676" target="_blank">0539 119 1676</a></p>
+        </div>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#anasayfa">Anasayfa</a></li>
+            <li><a href="#urunler">Ürünler</a></li>
+            <li><a href="#hayvancilik">Hayvancılık</a></li>
+            <li><a href="#hakkimizda">Hakkımızda</a></li>
+            <li><a href="#iletisim">İletisim</a></li>
+        </ul>
+    </nav>
+
+    <section id="anasayfa" class="page active">
+        <div class="banner">
+            <div class="slide active"> <img src="banner-resmi.jpg" alt="Banner 1">
+                </div>
+            <div class="slide darkened-slide"> <img src="banner2.jpg" alt="Banner 2">
+                <h1>Geleneksel Üretim, Modern Hizmet</h1>
+                <p>En taze süt ve tarım ürünleriyle hizmetinizdeyiz.</p>
+            </div>
+            <div class="slide darkened-slide"> <img src="banner3.jpg" alt="Banner 3">
+                <h1>Doğadan Sofranıza, Güvenle!</h1>
+                <p>Kaliteli ürünler, hijyenik üretim ve zamanında teslimat.</p>
+            </div>
+        </div>
+         </section>
+
+    <section id="tercih-sebepleri" class="page">
+        <h2>Bizi Tercih Etmeniz İçin Sebepler</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="guven.png" alt="Güvenilirlik">
+                <h3>Güvenilirlik</h3>
+                <p>Kalite anlayışımızla her zaman yanınızdayız.</p>
+            </div>
+            <div class="card">
+                <img src="dogallik.png" alt="Doğallık">
+                <h3>Doğallık</h3>
+                <p>Ürünlerimiz tamamen doğal ve katkısızdır.</p>
+            </div>
+            <div class="card">
+                <img src="hizli.png" alt="Hızlı Teslimat">
+                <h3>Hızlı Teslimat</h3>
+                <p>Taptaze ürünler, zamanında teslim.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="basarilar" class="page">
+        <h2>Başarılarımız</h2>
+        <div class="counter-container">
+            <div>
+                <h3 class="counter" data-target="1982" data-duration="15000">2025</h3> <p>Yılından Beri</p>
+            </div>
+            <div>
+                <h3 class="counter" data-target="1000">0</h3>
+                <p>Mutlu Müşteri</p>
+            </div>
+            <div>
+                <h3>Tüm Başkent'e Hizmet</h3>
+                <p>Gururla!</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="urunler" class="page">
+        <h2>Ürünlerimiz</h2>
+        <div class="product-grid"> <div class="card">
+            <img src="sut.jpg" alt="Doğal Günlük Süt">
+            <h3>Doğal Günlük Süt</h3>
+            <p>Çiftliklerimizde hijyenik koşullarda sağılır, hiçbir katkı maddesi içermez. Günlük olarak tazeliği korunarak sofralarınıza ulaşır.</p>
+          </div>
+
+          <div class="card">
+            <img src="peynir.jpg" alt="Doğal Peynir">
+            <h3>Köy Peyniri</h3>
+            <p>Doğal sütlerimizden geleneksel yöntemlerle ürettiğimiz peynirlerimiz, yoğun aroması ve yüksek besin değeri ile fark yaratıyor.</p>
+          </div>
+
+          <div class="card">
+            <img src="tereyagi.jpg" alt="Tereyağı">
+            <h3>Tereyağı</h3>
+            <p>Saf süt kremasından geleneksel yöntemlerle ürettiğimiz tereyağlarımız, doğal rengi ve eşsiz lezzetiyle sofralarınıza değer katıyor.</p>
+          </div>
+
+          <div class="card">
+            <img src="yumurta.jpg" alt="Doğal Yumurta">
+            <h3>Organik Yumurta</h3>
+            <p>Serbest dolaşan tavuklarımızdan gelen taze ve günlük yumurtalar, hem daha lezzetli hem de daha besleyicidir.</p>
+          </div>
+           <div class="card">
+            <img src="bal.jpg" alt="Doğal Bal">
+            <h3>Doğal Bal</h3>
+            <p>Çiçeklerin özünden gelen, tamamen doğal ve katkısız balımız.</p>
+          </div>
+           <div class="card">
+            <img src="recel.jpg" alt="Ev Yapımı Reçel">
+            <h3>Ev Yapımı Reçel</h3>
+            <p>Meyvelerin en tatlı hali, ev yapımı reçellerimiz.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="hayvancilik" class="page">
+        <h2>Hayvancılık</h2>
+        <div class="product-grid"> <div class="card">
+            <img src="dana.jpg" alt="İyi Beslenmiş Dana">
+            <h3>Kurbanlık Hayvanlar</h3>
+            <p>Kurban bayramı için özel olarak seçilmiş, sağlıklı ve hijyenik koşullarda yetiştirilen hayvanlarımız.</p>
+          </div>
+
+          <div class="card">
+            <img src="kirmiziet.jpg" alt="Kırmızı Et">
+            <h3>Adaklık Hayvanlar</h3>
+            <p>Adaklık ihtiyaçlarınız için uygun, özenle bakılmış hayvanlarımızla hizmetinizdeyiz.</p>
+          </div>
+           <div class="card">
+            <img src="kuzu.jpg" alt="Besili Kuzu">
+            <h3>Besili Kuzu</h3>
+            <p>Doğal ortamlarında yetişen, lezzetli ve sağlıklı kuzularımız.</p>
+          </div>
+           <div class="card">
+            <img src="tavuk.jpg" alt="Gezen Tavuk">
+            <h3>Gezen Tavuk</h3>
+            <p>Serbest dolaşan, doğal beslenen tavuklarımız.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="hakkimizda" class="page">
+        <h2>Hakkımızda</h2>
+        <p>
+            1982 yılında Ankara’da kurulan Çelikler Süt, Tarım ve Hayvancılık A.Ş., Türkiye’nin tarım ve hayvancılık sektöründeki köklü ve güvenilir firmalarından biridir. Kuruluşumuzdan bu yana, toprağa bağlılık ve doğal üretim prensipleriyle hareket ederek, ülkemizin sürdürülebilir tarım ve hayvancılık vizyonuna katkı sağlamayı kendimize görev edindik.
+
+            Geleneksel çiftçilik bilgeliğini, modern tarım teknolojileriyle birleştirerek hem verimli hem de etik bir üretim modeli oluşturduk. İnek sütü üretimi, tavuk yetiştiriciliği, tarla tarımı, kurbanlık hayvan yetiştiriciliği gibi farklı alanlarda faaliyet gösteriyor, her birinde kaliteyi ve güvenilirliği en ön planda tutuyoruz.
+            
+            Çiftliğimizde, Hollanda menşeli 80 adet yüksek verimli süt ineği ve modern altyapıya sahip geniş ahırlarımız ile uluslararası standartlara uygun bir üretim gerçekleştiriyoruz. Hayvanlarımızın bakımı, beslenmesi ve sağlığı, uzman veterinerler gözetiminde doğal ve dengeli bir şekilde sürdürülmektedir. Bununla birlikte, tavuk yetiştiriciliğinde de hijyenik, doğal ve sağlıklı koşullar altında üretim yaparak tüketicilerimize güvenilir ürünler sunuyoruz.
+            
+            Tüm üretim süreçlerimizde doğallık, hayvan refahı ve çevresel sürdürülebilirlik temel ilkelerimizdir. Toprağın dengesine zarar vermeyen uygulamalarla, doğal kaynakları koruyarak ve biyoçeşitliliği gözeterek faaliyet gösteriyoruz. Sadece kendi merkez çiftliğimizle sınırlı kalmayıp, diğer çiftlik kollarımız ve doğayla bütünleşmiş entegre tesislerimiz sayesinde üretim kapasitemizi genişletirken çevreyle uyumu her zaman ön planda tutuyoruz.
+            
+            Biz Çelikler A.Ş. olarak sadece üretim yapan bir kuruluş değil, aynı zamanda yaşam döngüsünün sürdürülebilirliği için çalışan, gelecek nesillere yaşanabilir bir dünya bırakmayı hedefleyen bir anlayışın temsilcisiyiz. 40 yılı aşkın tecrübemiz, sahadaki emeğimiz ve doğaya duyduğumuz derin saygı ile her adımda daha iyiye, daha doğala ulaşmaya devam ediyoruz.
+            
+            Her damla sütümüzde, her tarlamızda, her canlımızda bu özverinin izleri vardır. 
+            </p>
+      </section>
+
+      <section id="iletisim" class="page">
+        <h2>İletişim</h2>
+        <p>Bizimle iletişime geçmekten çekinmeyin!
+            Çelikler Süt, Tarım ve Hayvancılık A.Ş. olarak her türlü soru, öneri ve iş birliği talepleriniz için size bir telefon kadar yakınız.
+            
+            Çiftliğimizi ziyaret etmek, üretim sürecimizi yakından görmek ya da kurbanlık rezervasyonu hakkında bilgi almak isterseniz, aşağıdaki iletişim kanallarımızdan bize ulaşabilirsiniz:</p>
+        <p>
+            <ul style="list-style: none; padding: 0; line-height: 2;">
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 10px; color: #2c3e50;"></i>
+              <strong>Adres:</strong> Ankara, [Açık adresiniz buraya gelecek]
+            </li>
+            <li>
+              <i class="fas fa-phone-alt" style="margin-right: 10px; color: #27ae60;"></i>
+              <strong>Telefon:</strong> +90 312 000 00 00
+            </li>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 10px; color: #2980b9;"></i>
+              <strong>E-posta:</strong> info@celiklerhayvancilik.com
+            </li>
+            <li>
+              <i class="fab fa-instagram" style="margin-right: 10px; color: #e84393;"></i>
+              <strong>Instagram:</strong> <a href="https://instagram.com/celiklerhayvancilik" target="_blank">@celiklerhayvancilik</a>
+            </li>
+            <li>
+              <i class="fab fa-facebook" style="margin-right: 10px; color: #3b5998;"></i>
+              <strong>Facebook:</strong> <a href="https://facebook.com/celiklerhayvancilik" target="_blank">Çelikler Hayvancılık</a>
+            </li>
+          </ul>
+      </section>
+
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-column">
+          <img src="logo.png" alt="ÇELİKLER SÜT GIDA TARIM VE HAYVANCILIK" class="footer-logo">
+          <p>Esertepe Mah. 291. Sk No:11/11<br>Keçiören / Ankara</p>
+          <p><i class="fas fa-headset"></i> 0 (850) <strong>123 45 67</strong></p>
+          <p><i class="fas fa-envelope"></i> info@celiklersut.com</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/905391191676" target="_blank"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Kurumsal</h4>
+          <a href="#hakkimizda">Hakkımızda</a>
+          <a href="#">Kariyer</a>
+          <a href="#iletisim">İletişim</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Hizmetlerimiz</h4>
+          <a href="#urunler">Ürünler</a>
+          <a href="#hayvancilik">Hayvancılık</a>
+          <a href="#">Gıdalar</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Referanslar</h4>
+          <a href="#">Projelerimiz</a>
+          <a href="#">Müşteri Yorumları</a>
+          <a href="#">Alt Başlık 3</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>CELIKLER ❤️  © 2025.</p>
+        <div class="footer-links">
+          <a href="#">KVKK</a>
+          <a href="#">Hizmet Sözleşmesi</a>
+        </div>
+      </div>
+
+     </footer>
+
+    <script>
+        // Tüm bağlantıları seç (Navbar ve Logo linki dahil)
+    // Navigasyon linklerini (navbar içindeki), logo linkini ve footer içindeki linkleri seç
+const navLinks = document.querySelectorAll('nav ul li a, #logo-link, .footer-top a');
+    const pages = document.querySelectorAll('.page');
+    const anasayfaSection = document.getElementById('anasayfa');
+    const tercihSebepleriSection = document.getElementById('tercih-sebepleri');
+    const basarilarSection = document.getElementById('basarilar');
+
+    navLinks.forEach(link => {
+    link.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href').substring(1);
+        const targetPage = document.getElementById(targetId);
+
+        // Eğer link sayfa içi bir link ise (ve ilgili sayfa varsa)
+        if (this.getAttribute('href').startsWith('#') && targetPage) {
+            e.preventDefault(); // Varsayılan davranışı engelle (sayfa içi geçiş için)
+
+            // Tüm .page bölümlerini gizle
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Hedef bölümü göster
+            targetPage.classList.add('active');
+
+            // Eğer hedef anasayfa ise, tercih ve başarı bölümlerini de göster
+            if (targetId === 'anasayfa') {
+                 const tercihSebepleriSection = document.getElementById('tercih-sebepleri');
+                 const basarilarSection = document.getElementById('basarilar');
+                 if (tercihSebepleriSection) {
+                    tercihSebepleriSection.classList.add('active');
+                 }
+                 if (basarilarSection) {
+                     basarilarSection.classList.add('active');
+                 }
+            }
+
+             // Aktif navigasyon linkini güncelle
+             setActiveNavLink();
+
+        }
+        // Eğer link sayfa içi değilse (WhatsApp linki gibi), varsayılan davranışına izin verilecek.
+    });
+});
+
+    // Sayfa yüklendiğinde başlangıç durumunu ayarla
+    document.addEventListener('DOMContentLoaded', () => {
+        // Önce tüm .page bölümlerini gizle
+        pages.forEach(page => page.classList.remove('active'));
+
+        // Anasayfa, tercih sebepleri ve başarılar bölümlerini aktif yap
+        if (anasayfaSection) {
+            anasayfaSection.classList.add('active');
+        }
+        if (tercihSebepleriSection) {
+            tercihSebepleriSection.classList.add('active');
+        }
+        if (basarilarSection) {
+            basarilarSection.classList.add('active');
+        }
+
+        // Başlangıçta aktif navigasyon linkini belirle
+        setActiveNavLink();
+
+        // Sayaç animasyonunu başlatmak için Intersection Observer kullanacağız
+        // animateCounters() çağrısı artık burada değil
+    });
+
+
+    // Sayaç Animasyonu JavaScript'i
+    // Sayaç Animasyonu JavaScript'i
+   
+    //const speed = 600; // Animasyon hızı (daha büyük sayı daha yavaş) - Bu değişken scriptinizde daha yukarıda tanımlı olmalı
+
+    // Sayaç Animasyonu JavaScript'i
+    const counters = document.querySelectorAll('.counter-container .counter'); // Sayaç elementlerini seç
+    const defaultDuration = 8000; // Varsayılan animasyon süresi milisaniye cinsinden (data-duration olmayan sayaçlar için)
+
+    const animateCounters = () => {
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const initialCount = +counter.innerText; // Animasyon başladığındaki değeri al
+
+            // Bu sayaca özel bir süre tanımlanmış mı kontrol et
+            const customDurationAttr = counter.getAttribute('data-duration');
+            const animationDuration = customDurationAttr ? +customDurationAttr : defaultDuration;
+
+
+            // Eğer elementin data-target özelliği varsa ve başlangıç değeri sayısal mı kontrol et
+            if (!isNaN(target) && !isNaN(initialCount) && !isNaN(animationDuration)) {
+                 const difference = target - initialCount;
+                 // Animasyon adım sayısı (setTimeout gecikmesi 1ms varsayıldı)
+                 const steps = animationDuration; // Bu sayaç için belirlenen süreyi kullan
+                 const increment = difference / steps; // Adım başına artış/azalış miktarı
+
+                 // Eğer sayaç şu anda hedef değerinde değilse animasyonu başlat
+                 // Bu kontrol, animateCounters fonksiyonu observer tarafından çağrıldığında animasyonun
+                 // sadece bir kere başlamasını sağlar (eğer daha önce bitmediyse).
+                 if (initialCount !== target) {
+
+                     const updateCount = () => {
+                        const currentCount = +counter.innerText;
+
+                        // Hedefe doğru ilerleme koşulu
+                        let shouldContinue = false;
+                        if (difference > 0 && currentCount < target) { // İleri sayma (hedef başlangıçtan büyükse)
+                             shouldContinue = true;
+                        } else if (difference < 0 && currentCount > target) { // Geri sayma (hedef başlangıçtan küçükse)
+                            shouldContinue = true;
+                        } else if (difference === 0) {
+                             // Başlangıç ve hedef aynıysa animasyona gerek yok
+                             shouldContinue = false;
+                        }
+
+
+                        if (shouldContinue) {
+                             // Sayacı increment kadar artır/azalt
+                             let nextCount = currentCount + increment;
+
+                             // Hedefi aştıysa veya hedefe ulaştıysa durdur
+                             // İleri saymada >= hedef, geri saymada <= hedef olduğunda dur
+                             if ((difference > 0 && nextCount >= target) || (difference < 0 && nextCount <= target)) {
+                                  counter.innerText = target; // Hedef değere sabitle
+                             } else {
+                                  // Sayıyı doğru yöne yuvarla (geri saymada Math.floor, ileri saymada Math.ceil)
+                                   let roundedCount;
+                                   if (difference > 0) { // İleri sayma
+                                      roundedCount = Math.ceil(nextCount);
+                                   } else { // Geri sayma
+                                      roundedCount = Math.floor(nextCount);
+                                   }
+                                   counter.innerText = roundedCount;
+                                  setTimeout(updateCount, 1); // Her 1 milisaniyede güncelle
+                             }
+
+                        } else {
+                             // Eğer animasyon devam etmiyorsa, son değeri hedef yap
+                             counter.innerText = target;
+                        }
+                    };
+
+                    // Animasyon döngüsünü başlat
+                    updateCount();
+                 }
+            }
+             // Eğer data-target yoksa veya sayısal değilse (örn: "Tüm Başkent'e Hizmet") animasyon yapmaz
+        });
+    };
+
+
+    // Intersection Observer kısmı bu kod bloğunun dışında yer alıyor ve animateCounters'ı doğru zamanda çağırıyor.
+
+    // Sayaçları sadece göründüğünde başlatmak için Intersection Observer
+    const basarilarSectionElement = document.getElementById('basarilar'); // Başarılar bölüm elementini al
+
+    const observerOptions = {
+      root: null, // viewport'u kullan
+      rootMargin: '0px', // varsayılan margin
+      threshold: 0.1 // Elementin %10'u görünür olduğunda tetikle
+    };
+
+    // Intersection Observer oluştur
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        // Başarılar bölümü görünür hale geldiğinde
+        if (entry.isIntersecting) {
+          animateCounters(); // Sayaç animasyonunu başlat
+          // observer.disconnect(); // Gözlemlemeyi durdurmak isterseniz bu satırı aktif edin
+                                  // (Animasyon bir kere başlar ve biter)
+        } else {
+            // Eğer bölüm görünürlükten çıkarsa sayaçları sıfırlamak isterseniz
+            // counters.forEach(counter => { if(!isNaN(+counter.getAttribute('data-target'))) counter.innerText = '0'; });
+        }
+      });
+    }, observerOptions);
+
+    // Başarılar bölümünü gözlemlemeye başla
+    if (basarilarSectionElement) { // Elementin varlığını kontrol et
+      observer.observe(basarilarSectionElement);
+    }
+
+
+    // Banner Slayt Gösterisi JavaScript'i
+    const slides = document.querySelectorAll('.banner .slide'); // Slaytları seç
+    let currentSlideIndex = 0;
+    const slideIntervalTime = 5000; // Her görselin kalma süresi (milisaniye)
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => { // Slaytlar üzerinde döngü yap
+            if (i === index) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+    }
+
+    // Başlangıçta ilk slaytı göster
+    if (slides.length > 0) {
+        showSlide(currentSlideIndex);
+
+        // Belirli aralıklarla slayt değiştir
+        setInterval(() => {
+            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+            showSlide(currentSlideIndex);
+        }, slideIntervalTime);
+    }
+
+    </script>
+</body>
+</html>
