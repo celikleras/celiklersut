@@ -13,12 +13,15 @@
             box-sizing: border-box;
         }
         header {
-            display: flex; /* Flexbox kullanarak içerikleri yan yana diz */
-            justify-content: space-between; /* İçerikler arasına boşluk bırak */
-            align-items: center; /* Dikeyde hizala */
-            padding: 10px 20px; /* Başlık içine boşluk - İhtiyaca göre ayarlayın */
-            background-color: #f8f8f8;
-        }
+    /* display: flex; ve justify-content: space-between; kaldırıldı */
+    display: block; /* veya bu satırı tamamen silebilirsiniz */
+    /* align-items: center; kaldırıldı */
+    padding: 5px 20px; /* Header'ın istediğiniz padding değerini ayarlayın */
+    background-color: #f8f8f8;
+    max-height: none; /* Header'a verdiğiniz max-height kaldırılabilir veya contact div yüksekliğine göre ayarlanabilir */
+    overflow: visible; /* Kaldırılabilir */
+    text-align: right; /* İletişim bilgisini sağa hizalamak için */
+}
         header img {
             max-width: 150px;
         }
@@ -27,7 +30,7 @@
             flex-shrink: 0; /* Küçülmeyi engelle */
         }
         header .logo img {
-            max-width: 150px; /* Logo boyutu - İhtiyaca göre ayarlayın */
+            max-width: 180px; /* Logo boyutu - İhtiyaca göre ayarlayın */
             display: block; /* Ek boşlukları engelle */
         }
 
@@ -35,7 +38,7 @@
         .top-right-contact {
             text-align: right; /* Metinleri sağa hizala */
             font-size: 0.9em; /* Yazı boyutu - İhtiyaca göre ayarlayın */
-            color: #555; /* Metin rengi - İhtiyaca göre ayarlayın */
+            color: #bcb2b2; /* Metin rengi - İhtiyaca göre ayarlayın */
         }
 
         .top-right-contact p {
@@ -43,7 +46,7 @@
         }
 
          .top-right-contact a {
-             color: #555; /* Link rengi - İhtiyaca göre ayarlayın */
+             color: #ffffff; /* Link rengi - İhtiyaca göre ayarlayın */
              text-decoration: none;
              transition: color 0.3s ease;
          }
@@ -61,12 +64,14 @@
              color: #25D366; /* WhatsApp ikon rengi - İhtiyaca göre ayarlayın */
          }
 
-        nav {
-            background-color: #333;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            text-align: center; /* Linkleri ortalamak için */
-        }
+         nav {
+    background-color: #333;
+    padding: 10px 20px; /* Nav'ın üst, alt ve yan paddinglerini ayarlayın */
+    margin-bottom: 20px;
+    display: flex; /* Nav'ı flex container yap */
+    align-items: center; /* İçindekileri (logo ve ul) dikeyde ortala */
+    justify-content: space-between; /* Logo sola, ul sağa hizalanır */
+}
         nav ul {
             list-style: none;
             margin: 0;
@@ -92,10 +97,30 @@
             background-color: rgba(255, 255, 255, 0.1); /* Aktif link arka plan rengi (hafif saydam beyaz) */
         }
 
-        nav ul li a:hover {
-             background-color: rgba(255, 255, 255, 0.05); /* Mouse üzerine gelince arka plan rengi */
-        }
+        
 
+        nav .logo img {
+    max-width: 180px; /* Nav içindeki logonun maksimum genişliğini ayarlayın */
+    height: auto; /* Yüksekliğin orantılı kalmasını sağlayın */
+    display: block;
+}
+
+nav #logo-link {
+    /* Header'da uygulanan absolute konumlandırma stilini kaldırın */
+    position: static; /* Varsayılan değer */
+    top: auto;
+    left: auto;
+    transform: none;
+    /* Logo ile navigasyon linkleri arasına boşluk bırakmak için margin ekleyebilirsiniz */
+    margin-right: 20px;
+    flex-shrink: 0; /* Küçülmeyi engelle */
+}
+
+nav .logo {
+   /* Flex özelliklerini buradan kaldırın, logo linkine veya img'ye odaklanın */
+   /* Örneğin, eğer logo divinin bir paddingi vardıysa ve kaldırmak isterseniz */
+   padding: 0;
+}
 
          /* Banner CSS */
         .banner {
@@ -385,25 +410,28 @@
 </head>
 <body>
     <header>
+        
+    </header>
+    <nav>
+
         <a href="#anasayfa" id="logo-link">
             <div class="logo">
                  <img src="logoseffaf.png" alt="Çiftlik Logosu">
             </div>
         </a>
+        
         <div class="top-right-contact">
             <p>Bizi Arayın</p>
             <p><i class="fas fa-phone-alt"></i> <a href="tel:+905391191676">0539 119 1676</a></p>
-            <p>WhatsApp sipariş</p>
+            <p>WhatsApp Sipariş</p>
             <p><i class="fab fa-whatsapp whatsapp-link"></i> <a href="https://wa.me/905391191676" target="_blank">0539 119 1676</a></p>
         </div>
-    </header>
-    <nav>
         <ul>
             <li><a href="#anasayfa">Anasayfa</a></li>
             <li><a href="#urunler">Ürünler</a></li>
             <li><a href="#hayvancilik">Hayvancılık</a></li>
             <li><a href="#hakkimizda">Hakkımızda</a></li>
-            <li><a href="#iletisim">İletisim</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
         </ul>
     </nav>
 
@@ -620,6 +648,9 @@
 
      </footer>
 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <script>
         // Tüm bağlantıları seç (Navbar ve Logo linki dahil)
     // Navigasyon linklerini (navbar içindeki), logo linkini ve footer içindeki linkleri seç
@@ -691,11 +722,8 @@ const navLinks = document.querySelectorAll('nav ul li a, #logo-link, .footer-top
 
 
     // Sayaç Animasyonu JavaScript'i
-    // Sayaç Animasyonu JavaScript'i
-   
-    //const speed = 600; // Animasyon hızı (daha büyük sayı daha yavaş) - Bu değişken scriptinizde daha yukarıda tanımlı olmalı
+  
 
-    // Sayaç Animasyonu JavaScript'i
     const counters = document.querySelectorAll('.counter-container .counter'); // Sayaç elementlerini seç
     const defaultDuration = 8000; // Varsayılan animasyon süresi milisaniye cinsinden (data-duration olmayan sayaçlar için)
 
@@ -829,6 +857,100 @@ const navLinks = document.querySelectorAll('nav ul li a, #logo-link, .footer-top
         }, slideIntervalTime);
     }
 
+
+// Kartları seçin
+const cards = document.querySelectorAll('.card');
+
+cards.forEach(card => {
+  // Fare kartın üzerine geldiğinde
+  card.addEventListener('mouseenter', () => {
+    gsap.to(card, {
+      duration: 0.3,
+      y: -5, // 5 piksel yukarı kaldır
+      boxShadow: "0px 10px 20px rgba(0,0,0,0.2)", // Daha belirgin bir gölge ekle
+      ease: "power1.out"
+    });
+  });
+
+  // Fare kartın üzerinden ayrıldığında
+  card.addEventListener('mouseleave', () => {
+    gsap.to(card, {
+      duration: 0.3,
+      y: 0, // Başlangıç dikey konumuna dön
+      boxShadow: "2px 2px 12px rgba(0, 0, 0, 0.1)", // Başlangıç gölgesine dön (CSS'inizdeki değer)
+      ease: "power1.out"
+    });
+  });
+});
+
+
+// Navigasyon linklerini seçin
+const navLinksHover = document.querySelectorAll('nav ul li a');
+
+navLinksHover.forEach(link => {
+  // Fare linkin üzerine geldiğinde
+  link.addEventListener('mouseenter', () => {
+    gsap.to(link, {
+      duration: 0.3, // Animasyon süresi
+      scale: 1.1, // %10 büyüt
+      color: "#007bff", // Yazı rengini değiştir
+      ease: "power1.out"
+    });
+  });
+
+  // Fare linkin üzerinden ayrıldığında
+  link.addEventListener('mouseleave', () => {
+    gsap.to(link, {
+      duration: 0.3, // Animasyon süresi
+      scale: 1, // Başlangıç boyutuna dön
+      color: "#ffffff", // Başlangıç rengine dön (CSS'inizdeki varsayılan renk)
+      ease: "power1.out"
+    });
+  });
+});
+
+    gsap.from("#logo-link", {
+  duration: 3, // Animasyon süresi 1 saniye
+  x: -50, // Soldan 50 piksel içeriden başla
+  opacity: 0, // Başlangıçta görünmez ol
+  ease: "power2.out" // Animasyon geçiş tipi
+});
+    
+    gsap.from("nav ul li", {
+  duration: 2, // Her bir element için animasyon süresi
+  opacity: 0, // Başlangıçta görünmez ol
+  y: -20, // Yukarıdan 20 piksel aşağıdan başla
+  stagger: 0.1, // Elementler arasında 0.1 saniye gecikme ile sırayla animasyon yap
+  ease: "back.out(1.7)" // Animasyon geçiş tipi
+});
+
+gsap.utils.toArray("section h2").forEach(sectionTitle => {
+  gsap.from(sectionTitle, {
+    opacity: 0, // Başlangıçta görünmez ol
+    scale: 0.8, // Başlangıçta %80 boyutunda ol
+    duration: 1, // Animasyon süresi 1 saniye
+    scrollTrigger: {
+      trigger: sectionTitle, // Bu elementi tetikleyici olarak kullan
+      start: "top 80%", // Elementin tepesi viewport'un %80'ine geldiğinde animasyonu başlat
+      toggleActions: "play none none none" // Animasyonu sadece bir kere oynat
+    }
+  });
+});
+
+gsap.utils.toArray(".card").forEach(card => {
+  gsap.from(card, {
+    opacity: 0, // Başlangıçta görünmez ol
+    y: 50, // Aşağıdan 50 piksel yukarıdan başla
+    duration: 0.8, // Animasyon süresi 0.8 saniye
+    scrollTrigger: {
+      trigger: card, // Bu kartı tetikleyici olarak kullan
+      start: "top 90%", // Kartın tepesi viewport'un %90'ına geldiğinde animasyonu başlat
+      toggleActions: "play none none none" // Animasyonu sadece bir kere oynat
+    }
+  });
+});
+
     </script>
+    
 </body>
 </html>
