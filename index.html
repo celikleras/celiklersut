@@ -14,32 +14,27 @@
             box-sizing: border-box;
         }
         header {
-    /* display: flex; ve justify-content: space-between; kaldırıldı */
-    display: block; /* veya bu satırı tamamen silebilirsiniz */
-    /* align-items: center; kaldırıldı */
-    padding: 5px 20px; /* Header'ın istediğiniz padding değerini ayarlayın */
-    background-color: #f8f8f8;
-    max-height: none; /* Header'a verdiğiniz max-height kaldırılabilir veya contact div yüksekliğine göre ayarlanabilir */
-    overflow: visible; /* Kaldırılabilir */
-    text-align: right; /* İletişim bilgisini sağa hizalamak için */
-}
+            display: flex; /* İçindeki elemanları (logo ve iletişim) yan yana hizala */
+            justify-content: space-between; /* Logo sola, iletişim bilgisi sağa */
+            align-items: center; /* Elemanları dikeyde ortala */
+            padding: 1px 20px; /* Üst ve alt paddingi artırabilirsiniz (isteğe bağlı) */
+            background-color: #575757; /* Mevcut arka plan rengi */
+            /* text-align: right; ARTIK GEREKMİYOR - Flexbox hizalamayı yönetecek */
+             max-height: none; /* Daha önceki kuralı koruyabilirsiniz veya kaldırabilirsiniz */
+             overflow: visible; /* Daha önceki kuralı koruyabilirsiniz veya kaldırabilirsiniz */
+        }
         header img {
             max-width: 150px;
         }
 
-        header .logo { /* Logo için div */
-            flex-shrink: 0; /* Küçülmeyi engelle */
-        }
-        header .logo img {
-            max-width: 180px; /* Logo boyutu - İhtiyaca göre ayarlayın */
-            display: block; /* Ek boşlukları engelle */
-        }
+       
+       
 
         /* Sağ üst köşe iletişim bilgileri */
         .top-right-contact {
             text-align: right; /* Metinleri sağa hizala */
             font-size: 0.9em; /* Yazı boyutu - İhtiyaca göre ayarlayın */
-            color: #bcb2b2; /* Metin rengi - İhtiyaca göre ayarlayın */
+            color: #cdcdcd; /* Metin rengi - İhtiyaca göre ayarlayın */
         }
 
         .top-right-contact p {
@@ -47,7 +42,7 @@
         }
 
          .top-right-contact a {
-             color: #ffffff; /* Link rengi - İhtiyaca göre ayarlayın */
+             color: #1c1c1c; /* Link rengi - İhtiyaca göre ayarlayın */
              text-decoration: none;
              transition: color 0.3s ease;
          }
@@ -102,6 +97,8 @@
             transition: max-height 0.3s ease-out;
         }
 
+        
+
         .menu {
             flex-direction: column; /* Menü linklerini alt alta sırala */
             align-items: center;      /* Ortala */
@@ -128,12 +125,21 @@
             max-height: 500px; /* veya yeterince büyük bir değer */
             overflow: visible;
         }
+
+        .section, .page {
+                padding-left: 15px;  /* Soldan daha az padding */
+                padding-right: 15px; /* Sağdan daha az padding */
+                /* İsteğe bağlı: Üst/alt paddingi de mobilde düşürebilirsiniz */
+                /* padding-top: 20px; */
+                /* padding-bottom: 20px; */
+            }
     }
 
     /* Masaüstü stilleri (768px'den büyük ekranlar) */
     @media screen and (min-width: 769px) {
         .menu-container {
             display: block; /* Masaüstünde menüyü göster */
+            width: 100%;
         }
         .hamburger {
             display: none; /* Hamburger'ı gizle */
@@ -167,24 +173,24 @@
 
         
 
-        nav .logo img {
-    max-width: 180px; /* Nav içindeki logonun maksimum genişliğini ayarlayın */
+        header .logo img {
+    max-width: 100px; /* Nav içindeki logonun maksimum genişliğini ayarlayın */
     height: auto; /* Yüksekliğin orantılı kalmasını sağlayın */
     display: block;
 }
 
-nav #logo-link {
+header #logo-link {
     /* Header'da uygulanan absolute konumlandırma stilini kaldırın */
     position: static; /* Varsayılan değer */
     top: auto;
     left: auto;
     transform: none;
     /* Logo ile navigasyon linkleri arasına boşluk bırakmak için margin ekleyebilirsiniz */
-    margin-right: 20px;
+   
     flex-shrink: 0; /* Küçülmeyi engelle */
 }
 
-nav .logo {
+header  .logo {
    /* Flex özelliklerini buradan kaldırın, logo linkine veya img'ye odaklanın */
    /* Örneğin, eğer logo divinin bir paddingi vardıysa ve kaldırmak isterseniz */
    padding: 0;
@@ -478,10 +484,6 @@ nav .logo {
 </head>
 <body>
     <header>
-        
-    </header>
-    <nav>
-
         <a href="#anasayfa" id="logo-link">
             <div class="logo">
                  <img src="logoseffaf.png" alt="Çiftlik Logosu">
@@ -494,7 +496,12 @@ nav .logo {
             <p>WhatsApp Sipariş</p>
             <p><i class="fab fa-whatsapp whatsapp-link"></i> <a href="https://wa.me/905391191676" target="_blank">0539 119 1676</a></p>
         </div>
-        <div class="menu-container">  <ul class="menu">           <li><a href="#anasayfa">Anasayfa</a></li>
+    </header>
+    <nav>
+
+   
+        <div class="menu-container">  <ul class="menu">           
+            <li><a href="#anasayfa">Anasayfa</a></li>
             <li><a href="#urunler">Ürünler</a></li>
             <li><a href="#hayvancilik">Hayvancılık</a></li>
             <li><a href="#hakkimizda">Hakkımızda</a></li>
