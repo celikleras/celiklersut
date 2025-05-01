@@ -7,6 +7,9 @@
     <link rel="icon" href="logoseffaf.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        
+      
+        
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -60,6 +63,10 @@
              color: #25D366; /* WhatsApp ikon rengi - İhtiyaca göre ayarlayın */
          }
 
+        
+
+
+        .banner .slide img.banner-mobile-img { display: none; }
          nav {
     background-color: #333;
     padding: 10px 20px; /* Nav'ın üst, alt ve yan paddinglerini ayarlayın */
@@ -81,80 +88,9 @@
     }
 
     /* Mobil Stiller */
-    @media screen and (max-width: 768px) {
-        .menu-container {
-            display: none; /* Menüyü başlangıçta gizle */
-            position: absolute;
-            top: 100%; /* Nav'ın altında konumlandır */
-            left: 0;
-            width: 100%;
-            background-color: #333;
-            z-index: 1000; /* Diğer elemanların üstünde olsun */
-            
-            /* Animasyon için */
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-        }
-
-        
-
-        .menu {
-            flex-direction: column; /* Menü linklerini alt alta sırala */
-            align-items: center;      /* Ortala */
-            padding: 10px 0;
-        }
-
-        .menu li {
-            margin: 10px 0;
-        }
-
-        .hamburger {
-            display: block; /* Hamburger'ı göster */
-            font-size: 1.5em;
-            color: white;
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-        }
-
-        .menu-active {
-            display: block;
-            max-height: 500px; /* veya yeterince büyük bir değer */
-            overflow: visible;
-        }
-
-        .section, .page {
-                padding-left: 0px;  /* Soldan daha az padding */
-                padding-right: 0px; /* Sağdan daha az padding */
-                /* İsteğe bağlı: Üst/alt paddingi de mobilde düşürebilirsiniz */
-                /* padding-top: 20px; */
-                /* padding-bottom: 20px; */
-            }
-
-            .banner .slide img.banner-desktop-img {
-                display: none;
-            }
-            /* Mobil görünümde Slayt 1'in mobil görselini göster - Seçici önceliği artırıldı */
-            .banner .slide img.banner-mobile-img {
-                display: block;
-            }
-        
+   
     }
 
-    /* Masaüstü stilleri (768px'den büyük ekranlar) */
-    @media screen and (min-width: 769px) {
-        .menu-container {
-            display: block; /* Masaüstünde menüyü göster */
-            width: 100%;
-        }
-        .hamburger {
-            display: none; /* Hamburger'ı gizle */
-        }
-    }
-}
         nav ul {
             list-style: none;
             margin: 0;
@@ -258,9 +194,7 @@ header  .logo {
         }
 
         /* Sadece mobil görseli varsayılan olarak (masaüstünde) gizle - Seçici önceliği artırıldı */
-        .banner .slide img.banner-mobile-img {
-            display: none;
-        }
+        
 
         .banner .slide h1 {
             margin-top: 0;
@@ -492,6 +426,87 @@ header  .logo {
         .footer-bottom .footer-links a:hover {
             color: white;
         }
+
+
+        @media screen and (max-width: 768px) {
+        .menu-container {
+            display: none; /* Menüyü başlangıçta gizle */
+            position: absolute;
+            top: 100%; /* Nav'ın altında konumlandır */
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            z-index: 1000; /* Diğer elemanların üstünde olsun */
+            
+            /* Animasyon için */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        
+
+        
+
+        .menu {
+            flex-direction: column; /* Menü linklerini alt alta sırala */
+            align-items: center;      /* Ortala */
+            padding: 10px 0;
+        }
+
+        .menu li {
+            margin: 10px 0;
+        }
+
+        .hamburger {
+            display: block; /* Hamburger'ı göster */
+            font-size: 1.5em;
+            color: white;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        .menu-active {
+            display: block;
+            max-height: 500px; /* veya yeterince büyük bir değer */
+            overflow: visible;
+        }
+
+        .section, .page {
+             padding-left: 15px !important;
+             padding-right: 15px !important;
+          }
+           #anasayfa.page {
+               padding-left: 0 !important;
+               padding-right: 0 !important;
+           }
+
+            .banner .slide img.banner-desktop-img {
+                display: none;
+            }
+            /* Mobil görünümde Slayt 1'in mobil görselini göster - Seçici önceliği artırıldı */
+            .banner .slide img.banner-mobile-img {
+                display: block;
+            }
+            
+        }
+        
+    
+
+    /* Masaüstü stilleri (768px'den büyük ekranlar) */
+    @media screen and (min-width: 769px) {
+        .menu-container {
+            display: block; /* Masaüstünde menüyü göster */
+            width: 100%;
+        }
+        .hamburger {
+            display: none; /* Hamburger'ı gizle */
+        }
+        
+    }
 
 
     </style>
