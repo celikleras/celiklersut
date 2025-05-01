@@ -726,9 +726,17 @@ nav .logo {
 
 const hamburger = document.querySelector('.hamburger');
     const menuContainer = document.querySelector('.menu-container');
+    const menuLinks = document.querySelectorAll('.menu a'); // Tüm menü linklerini seç
 
     hamburger.addEventListener('click', () => {
         menuContainer.classList.toggle('menu-active');
+    });
+
+    // Her menü linkine tıklama olayı ekle
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuContainer.classList.remove('menu-active'); // Menüyü kapat
+        });
     });
 
 
