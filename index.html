@@ -83,6 +83,7 @@
         align-items: center;
         justify-content: space-between;
         position: relative; /* Hamburger için */
+        flex-wrap: wrap; /* Gerekirse elemanları alt satıra kaydır */
     }
 
     /* Mobil Stiller */
@@ -481,7 +482,6 @@ nav .logo {
         
     </header>
     <nav>
-
         <a href="#anasayfa" id="logo-link">
             <div class="logo">
                  <img src="logoseffaf.png" alt="Çiftlik Logosu">
@@ -494,15 +494,16 @@ nav .logo {
             <p>WhatsApp Sipariş</p>
             <p><i class="fab fa-whatsapp whatsapp-link"></i> <a href="https://wa.me/905391191676" target="_blank">0539 119 1676</a></p>
         </div>
-        <div class="menu-container">  <ul class="menu">           <li><a href="#anasayfa">Anasayfa</a></li>
-            <li><a href="#urunler">Ürünler</a></li>
-            <li><a href="#hayvancilik">Hayvancılık</a></li>
-            <li><a href="#hakkimizda">Hakkımızda</a></li>
-            <li><a href="#iletisim">İletişim</a></li>
-        </ul>
-    </div>
-    <div class="hamburger">  <i class="fas fa-bars"></i>
-    </div>
+        
+        <div class="nav-menu">  <ul class="menu">           <li><a href="#anasayfa">Anasayfa</a></li>
+                <li><a href="#urunler">Ürünler</a></li>
+                <li><a href="#hayvancilik">Hayvancılık</a></li>
+                <li><a href="#hakkimizda">Hakkimizda</a></li>
+                <li><a href="#iletisim">İletisim</a></li>
+            </ul>
+            <div class="hamburger">  <i class="fas fa-bars"></i>
+            </div>
+        </div>
     </nav>
 
     <section id="anasayfa" class="page active">
@@ -723,12 +724,19 @@ nav .logo {
 
     <script>
 
-
 const hamburger = document.querySelector('.hamburger');
     const menuContainer = document.querySelector('.menu-container');
+    const menuLinks = document.querySelectorAll('.menu a'); // Tüm menü linklerini seç
 
     hamburger.addEventListener('click', () => {
         menuContainer.classList.toggle('menu-active');
+    });
+
+    // Her menü linkine tıklama olayı ekle
+    menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuContainer.classList.remove('menu-active'); // Menüyü kapat
+        });
     });
 
 
@@ -806,7 +814,7 @@ const navLinks = document.querySelectorAll('nav ul li a, #logo-link, .footer-top
   
 
     const counters = document.querySelectorAll('.counter-container .counter'); // Sayaç elementlerini seç
-    const defaultDuration = 8000; // Varsayılan animasyon süresi milisaniye cinsinden (data-duration olmayan sayaçlar için)
+    const defaultDuration = 5000; // Varsayılan animasyon süresi milisaniye cinsinden (data-duration olmayan sayaçlar için)
 
     const animateCounters = () => {
         counters.forEach(counter => {
