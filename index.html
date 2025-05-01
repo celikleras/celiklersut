@@ -77,17 +77,8 @@
     position: relative; /* Hamburger için */
 
     /* Genel nav stilleri (önceki stillerle birlikte) */
-    nav {
-        background-color: #333;
-        padding: 10px 20px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: relative; /* Hamburger için */
-    }
+   
 
-    /* Mobil Stiller */
    
     }
 
@@ -480,7 +471,8 @@ header  .logo {
              padding-right: 15px !important;
           }
            #anasayfa.page {
-               padding-left: 0 !important;
+            padding-top: 0 !important;   
+            padding-left: 0 !important;
                padding-right: 0 !important;
            }
 
@@ -492,6 +484,17 @@ header  .logo {
                 display: block;
             }
             
+            nav {
+            margin-bottom: 0;
+        }
+
+        #anasayfa {
+            margin-top: 0;
+        } 
+        #anasayfa.page {
+             padding-top: 0 !important;
+             /* ... padding-left ve padding-right değerleri ... */
+        }
         }
         
     
@@ -847,6 +850,22 @@ const navLinks = document.querySelectorAll('nav ul li a, #logo-link, .footer-top
 
         // Sayaç animasyonunu başlatmak için Intersection Observer kullanacağız
         // animateCounters() çağrısı artık burada değil
+        setTimeout(() => {
+             window.scrollTo(0, 0);
+        }, 100); // 100 milisaniye gecikme
+    });
+
+    window.addEventListener('load', () => {
+        // Tüm kaynaklar yüklendikten sonra sayfayı tekrar en üste kaydır
+        // Bu, özellikle görseller yüklendikten sonra kayma olursa işe yarar
+        window.scrollTo(0, 0);
+
+        // İsteğe bağlı: Yükleme sonrası da küçük bir gecikme ekleyebilirsiniz
+        /*
+        setTimeout(() => {
+             window.scrollTo(0, 0);
+        }, 50);
+        */
     });
 
 
