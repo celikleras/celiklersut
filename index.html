@@ -72,6 +72,73 @@
     display: flex; /* Nav'ı flex container yap */
     align-items: center; /* İçindekileri (logo ve ul) dikeyde ortala */
     justify-content: space-between; /* Logo sola, ul sağa hizalanır */
+    position: relative; /* Hamburger için */
+
+    /* Genel nav stilleri (önceki stillerle birlikte) */
+    nav {
+        background-color: #333;
+        padding: 10px 20px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative; /* Hamburger için */
+    }
+
+    /* Mobil Stiller */
+    @media screen and (max-width: 768px) {
+        .menu-container {
+            display: none; /* Menüyü başlangıçta gizle */
+            position: absolute;
+            top: 100%; /* Nav'ın altında konumlandır */
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            z-index: 1000; /* Diğer elemanların üstünde olsun */
+            
+            /* Animasyon için */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .menu {
+            flex-direction: column; /* Menü linklerini alt alta sırala */
+            align-items: center;      /* Ortala */
+            padding: 10px 0;
+        }
+
+        .menu li {
+            margin: 10px 0;
+        }
+
+        .hamburger {
+            display: block; /* Hamburger'ı göster */
+            font-size: 1.5em;
+            color: white;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        .menu-active {
+            display: block;
+            max-height: 500px; /* veya yeterince büyük bir değer */
+            overflow: visible;
+        }
+    }
+
+    /* Masaüstü stilleri (768px'den büyük ekranlar) */
+    @media screen and (min-width: 769px) {
+        .menu-container {
+            display: block; /* Masaüstünde menüyü göster */
+        }
+        .hamburger {
+            display: none; /* Hamburger'ı gizle */
+        }
+    }
 }
         nav ul {
             list-style: none;
@@ -434,6 +501,9 @@ nav .logo {
             <li><a href="#hakkimizda">Hakkımızda</a></li>
             <li><a href="#iletisim">İletişim</a></li>
         </ul>
+    </div>
+    <div class="hamburger">  <i class="fas fa-bars"></i>
+    </div>
     </nav>
 
     <section id="anasayfa" class="page active">
@@ -653,6 +723,17 @@ nav .logo {
      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
+
+
+const hamburger = document.querySelector('.hamburger');
+    const menuContainer = document.querySelector('.menu-container');
+
+    hamburger.addEventListener('click', () => {
+        menuContainer.classList.toggle('menu-active');
+    });
+
+
+
         // Tüm bağlantıları seç (Navbar ve Logo linki dahil)
     // Navigasyon linklerini (navbar içindeki), logo linkini ve footer içindeki linkleri seç
 const navLinks = document.querySelectorAll('nav ul li a, #logo-link, .footer-top a');
