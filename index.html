@@ -133,6 +133,15 @@
                 /* padding-top: 20px; */
                 /* padding-bottom: 20px; */
             }
+
+            .banner .slide img.banner-desktop-img {
+                display: none;
+            }
+            /* Mobil görünümde Slayt 1'in mobil görselini göster - Seçici önceliği artırıldı */
+            .banner .slide img.banner-mobile-img {
+                display: block;
+            }
+        
     }
 
     /* Masaüstü stilleri (768px'den büyük ekranlar) */
@@ -238,7 +247,7 @@ header  .logo {
 
 
         .banner .slide img {
-             display: block;
+             display: block; /* Varsayılan olarak block yap */
              width: 100%;
              height: 100%;
              object-fit: cover; /* Oranları bozmadan alanı kapla */
@@ -246,6 +255,11 @@ header  .logo {
              top: 0;
              left: 0;
              z-index: -2; /* Yazı ve karartma katmanının altında */
+        }
+
+        /* Sadece mobil görseli varsayılan olarak (masaüstünde) gizle - Seçici önceliği artırıldı */
+        .banner .slide img.banner-mobile-img {
+            display: none;
         }
 
         .banner .slide h1 {
@@ -514,13 +528,17 @@ header  .logo {
 
     <section id="anasayfa" class="page active">
         <div class="banner">
-            <div class="slide active"> <img src="banner-resmi.jpg" alt="Banner 1">
+            <div class="slide active">
+                <img src="banner-resmi.jpg" alt="Banner 1 (Masaüstü)" class="banner-desktop-img">
+                <img src="banner-mobil1.png" alt="Banner 1 (Mobil)" class="banner-mobile-img">
                 </div>
-            <div class="slide darkened-slide"> <img src="banner2.jpg" alt="Banner 2">
+            <div class="slide darkened-slide"> 
+                <img src="banner2.jpg" alt="Banner 2">
                 <h1>Geleneksel Üretim, Modern Hizmet</h1>
                 <p>En taze süt ve tarım ürünleriyle hizmetinizdeyiz.</p>
             </div>
-            <div class="slide darkened-slide"> <img src="banner3.jpg" alt="Banner 3">
+            <div class="slide darkened-slide"> 
+                <img src="banner3.jpg" alt="Banner 3">
                 <h1>Doğadan Sofranıza, Güvenle!</h1>
                 <p>Kaliteli ürünler, hijyenik üretim ve zamanında teslimat.</p>
             </div>
